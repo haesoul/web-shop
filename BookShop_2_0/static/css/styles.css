@@ -1,0 +1,346 @@
+/* === Общие стили === */
+body.page-body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* === Навигация === */
+nav {
+    background-color: #2d3748;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+.nav-link {
+    color: #edf2f7;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.nav-link:hover {
+    background-color: #4a5568;
+}
+
+.nav-disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+nav p {
+    color: #edf2f7;
+    margin: 0 1rem 0 0;
+    font-weight: bold;
+}
+
+nav form {
+    display: inline-block;
+    margin-left: 1rem;
+}
+
+nav button {
+    background-color: #e53e3e;
+    color: #fff;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+nav button:hover {
+    background-color: #c53030;
+}
+
+/* === Контент === */
+.main-content {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-top: 2rem;
+}
+
+/* === Заголовки === */
+.page-title, .category-title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: #2d3748;
+    text-align: center;
+}
+
+/* === Категории и подкатегории === */
+.category-list {
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.category-item {
+    background-color: #edf2f7;
+    padding: 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease;
+}
+
+.category-item:hover {
+    transform: translateY(-4px);
+}
+
+.category-link {
+    color: #2b6cb0;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.category-link:hover {
+    text-decoration: underline;
+}
+
+.subcategory-list {
+    list-style: none;
+    padding-left: 1.5rem;
+    margin-top: 0.5rem;
+}
+
+.subcategory-item {
+    margin: 0.25rem 0;
+}
+
+.subcategory-link {
+    color: #4a5568;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+.subcategory-link:hover {
+    text-decoration: underline;
+}
+
+.category-link.active,
+.subcategory-link.active {
+    font-weight: bold;
+    color: #2563eb;
+}
+
+/* === Сетка товаров === */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.product-card {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    color: inherit;
+    text-decoration: none;
+    padding: 1rem;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.product-card a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.product-card img {
+    width: 15%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 0.75rem;
+}
+
+.product-card h3 {
+    font-size: 1.2rem;
+    margin: 0.5rem 0;
+    color: #2b6cb0;
+}
+
+.product-card p {
+    font-size: 0.95rem;
+    margin: 0.25rem 0;
+    color: #555;
+}
+
+.product-description {
+    color: #4a5568;
+    line-height: 1.5;
+}
+
+.product-price strong,
+.product-category strong,
+.product-subcategory strong,
+.product-brand strong,
+.product-genres strong,
+.product-quantity strong {
+    color: #2d3748;
+}
+
+/* === Жанры / бренды === */
+.genre-selector {
+    margin: 1.5rem 0;
+    padding: 0.75rem;
+    background-color: #f1f5f9;
+    border-radius: 8px;
+}
+
+.genre-selector h3 {
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    color: #222;
+}
+
+.genre-link {
+    display: inline-block;
+    margin: 0.3rem 0.5rem 0.3rem 0;
+    padding: 0.4rem 0.7rem;
+    background-color: #e2e8f0;
+    color: #1e40af;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.genre-link:hover {
+    background-color: #cbd5e1;
+}
+
+/* === Детали товара === */
+.product-detail {
+    min-width: 800px;
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 2rem;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.product-detail h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #2d3748;
+}
+
+.product-detail img {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.product-info p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+}
+
+.product-info a {
+    color: #2b6cb0;
+    text-decoration: none;
+}
+
+.product-info a:hover {
+    text-decoration: underline;
+}
+
+.product-description {
+    margin-top: 2rem;
+    color: #4a5568;
+    line-height: 1.6;
+}
+
+/* === Форма добавления в корзину === */
+.product-detail-form-block {
+    margin-top: 2rem;
+}
+
+.product-detail-form-block form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.product-detail-form-block button {
+    align-self: flex-start;
+    background-color: #38a169;
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.product-detail-form-block button:hover {
+    background-color: #2f855a;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #4a5568;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+/* === Пустой список товаров === */
+.no-products {
+    font-style: italic;
+    color: #777;
+    margin-top: 1rem;
+}
+
+/* === Адаптивность === */
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav p,
+    nav form {
+        margin-top: 0.5rem;
+    }
+}

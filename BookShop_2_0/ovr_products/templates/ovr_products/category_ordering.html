@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block title %} Главная {% endblock %}
+
+{% block content %}
+    <h1 class="category-title">Категория: {{ category.name }}</h1>
+
+    {% if genre_selected %}
+        {% for subcategory in subcategories %}
+            {% for genre in genres %}
+                {% if sub_category_selected == subcategory.slug %}
+                    {% if genre_selected == genre.slug %}
+                        <h2 class="filter-info">
+                            Фильтр по: {{ category.name }} | {{ subcategory.name }} | {{ genre.name }}
+                        </h2>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    {% else %}
+        {% for subcategory in subcategories %}
+            {% if sub_category_selected == subcategory.slug %}
+                <h2 class="filter-info">
+                    Фильтр по: {{ category.name }} | {{ subcategory.name }}
+                </h2>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <ul class="category-list">
+        {% for categoryy in categories %}
+            <li class="category-item">
+                <strong>
+                    <a class="category-link" href="{% url 'products_by_category' categoryy.slug %}">
+                        {{ categoryy.name }}
+                    </a>
+                </strong>
+            </li>
+
+            {% if category_selected == categoryy.slug %}
+                <ul class="subcategory-list">
+                    {% for sub in category.subcategories.all %}
+                        <li class="subcategory-item">
+                            <a class="subcategory-link" href="{% url 'products_by_category_subcategory' categoryy.slug sub.slug %}">
+                                {{ sub.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+
+        {% if category.category_type == "book" %}
+            <li class="genre-selector">
+                <h3>Выбрать Жанр</h3>
+                {% for book_genre in genres %}
+                    {% if sub_category_selected %}
+                        <a class="genre-link" href="{% url 'products_by_book_genre' category.slug sub_category_selected book_genre.slug %}">
+                            {{ book_genre.name }}
+                        </a>
+                    {% else %}
+                        <a class="genre-link" href="{% url 'only_genre_ordering' book_genre.slug %}">
+                            {{ book_genre.name }}
+                        </a>
+                    {% endif %}
+                {% endfor %}
+            </li>
+        {% elif category.category_type == "device" %}
+            <li class="genre-selector">
+                <h3>Выбрать Жанр</h3>
+
+                {% for brand in brands %}
+                    {% if sub_category_selected %}
+
+
+                        <a class="genre-link" href="{% url 'device_brand_filter_with_subcategory' sub_category_selected brand.slug %}">
+                            {{ brand.name }}
+                        </a>
+                    {% else %}
+
+                        <a class="genre-link" href="{% url 'device_brand_filter' brand.slug %}">{{ brand.name }}</a>
+                    {% endif %}
+                {% endfor %}
+            </li>
+
+        {% endif %}
+    </ul>
+
+    <ul class="product-list">
+        {% for product in products %}
+            <a href="{% url 'product_detail' product.slug %}">
+                <li class="product-item">
+                    <strong>{{ product.name }}</strong><br>
+                    Цена: {{ product.price }}<br>
+                    Кол-во: {{ product.quantity }}<br>
+
+                    {% if product.image %}
+                        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}" width="100">
+                    {% endif %}
+                </li>
+            </a>
+        {% empty %}
+            <li class="no-products">Нет продуктов в этой категории.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

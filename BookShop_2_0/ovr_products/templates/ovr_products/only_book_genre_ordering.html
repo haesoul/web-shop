@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %} Главная {% endblock %}
+
+{% block content %}
+    <h1 class="category-title">Категория: {{ category.name }}</h1>
+
+    {% for genre in genres %}
+        {% if genre.slug == genre_selected.slug %}
+            <h2 class="filter-info">
+                Фильтр по: {{ category.name }} | Все типы | {{ genre.name }}
+            </h2>
+        {% endif %}
+    {% endfor %}
+
+    <ul class="category-list">
+        {% for categoryy in categories %}
+            <li class="category-item">
+                <strong>
+                    <a class="category-link" href="{% url 'products_by_category' categoryy.slug %}">
+                        {{ categoryy.name }}
+                    </a>
+                </strong>
+            </li>
+
+            {% if category.slug == categoryy.slug %}
+                <ul class="subcategory-list">
+                    {% for sub in category.subcategories.all %}
+                        <li class="subcategory-item">
+                            <a class="subcategory-link" href="{% url 'products_by_category_subcategory' categoryy.slug sub.slug %}">
+                                {{ sub.name }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endfor %}
+
+        <li class="genre-selector">
+            <h3>Выбрать Жанр</h3>
+            {% for book_genre in genres %}
+                {% if sub_category_selected %}
+                    <a class="genre-link" href="{% url 'products_by_book_genre' category.slug sub_category_selected book_genre.slug %}">
+                        {{ book_genre.name }}
+                    </a>
+                {% else %}
+                    <a class="genre-link" href="{% url 'only_genre_ordering' book_genre.slug %}">
+                        {{ book_genre.name }}
+                    </a>
+                {% endif %}
+            {% endfor %}
+        </li>
+    </ul>
+
+    <ul class="product-list">
+        {% for product in products %}
+            <a href="{% url 'product_detail' product.slug %}">
+                <li class="product-item">
+                    <strong>{{ product.name }}</strong><br>
+                    Цена: {{ product.price }}<br>
+                    Кол-во: {{ product.quantity }}<br>
+
+                    {% if product.image %}
+                        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}" width="100">
+                    {% endif %}
+                </li>
+            </a>
+        {% empty %}
+            <li class="no-products">Нет продуктов в этой категории.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

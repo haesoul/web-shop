@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body class="page-body">
+<nav>
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}" class="nav-link">Главная</a></li>
+        <li><a href="{% url 'select_category' %}" class="nav-link">Категории</a></li>
+        <li><a href="{% url 'cart_order:cart_items_view' %}" class="nav-link">Корзина</a></li>
+        <li><a href="{% url 'cart_order:order_list' %}" class="nav-link">Заказы</a></li>
+        <li><a href="#" class="nav-link nav-disabled">Пункт 5</a></li>
+        {% if request.user.is_authenticated %}
+            <p>{{ user.username }}</p>
+            <form method="post" action="{% url 'users:logout' %}" >
+                {% csrf_token %}
+                <button  type="submit">Выйти</button>
+            </form>
+        {% else %}
+            <li><a href="{% url 'users:register' %}" class="nav-link">Регистрация</a></li>
+            <li><a href="{% url 'users:login' %}" class="nav-link">Войти</a></li>
+        {% endif %}
+
+    </ul>
+</nav>
+   <main class="main-content">
+      {% block content %}
+      {% endblock %}
+   </main>
+
+</body>
+</html>

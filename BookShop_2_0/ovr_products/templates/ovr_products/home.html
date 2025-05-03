@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block title %}Главная{% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Все продукты</h1>
+
+    <div class="product-list">
+        {% for product in products.all %}
+            <div class="product-card">
+                <a href="{% url 'product_detail' product.slug %}">
+                    <h3 class="product-title">{{ product.name }}</h3>
+
+                    {% if product.image %}
+                        <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                    {% endif %}
+
+                    <p class="product-price"><strong>Цена:</strong> {{ product.price }} $</p>
+
+                    <p class="product-category"><strong>Категория:</strong> {{ product.category.name }}</p>
+
+                    {% if product.subcategory %}
+                        <p class="product-subcategory"><strong>Тип:</strong> {{ product.subcategory.name }}</p>
+                    {% endif %}
+
+                    {% if product.device_brand %}
+                        <p class="product-brand">
+                            <strong>Бренд:</strong> {{ product.device_brand.name }}
+                        </p>
+                    {% endif %}
+
+                    {% if product.genres.all %}
+                        <p class="product-genres">
+                            <strong>Жанры:</strong>
+                            {% for genre in product.genres.all %}
+                                {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+
+                    <p class="product-description">
+                        {{ product.description|truncatechars:150 }}
+                    </p>
+
+                    <p class="product-quantity">
+                        <strong>Осталось на складе:</strong> {{ product.quantity }}
+                    </p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

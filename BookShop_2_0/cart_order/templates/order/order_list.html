@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block title %}{% endblock %}
+
+
+
+{% block content %}
+<h2>Мои заказы</h2>
+{% for order in orders %}
+    <div class="order-card">
+        {% for item in order.items.all %}
+    <div class="product-block-home">
+        <a href="{% url 'product' item.product.slug %}" class="product-link">
+            <div class="product-name-in-list">{{ item.product.name }}</div>
+            <div class="product-description-in-list">{{ item.product.description|truncatechars:300 }}</div>
+            {% if item.product.photo %}
+                <img class="products-middle-size-photo-in-list"
+                     src="{{ item.product.photo.url }}"
+                     alt="{{ item.product.name }}"
+                     width="200px" height="300px">
+            {% endif %}
+        </a>
+        <div class="product-price-in-list">Цена: <span class="product-price-value">${{ item.price }}</span></div>
+        <div class="product-quantity-in-list">Количество: <span class="product-price-value-in-list">{{ item.quantity }}</span></div>
+    </div>
+{% empty %}
+    <p>Нет товаров в этом заказе.</p>
+{% endfor %}
+        <p>Заказ №{{ order.id }} от {{ order.created_at }}</p>
+        <p>Статус: {{ order.status }}</p>
+
+        <a href="{% url 'cart_order:order_detail' order.id %}">Посмотреть детали</a>
+
+    </div>
+{% empty %}
+    <p>У вас пока нет заказов.</p>
+{% endfor %}
+
+{% endblock %}
+

@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% block title %} Бренд: {{ brand_slug|capfirst }} {% endblock %}
+
+{% block content %}
+    {{ sub_category_selected.slug }}
+    <h1 class="category-title">Категория: Техника</h1>
+    <h2 class="category-title">Фильтр по: Техника | {{ brand_slug|capfirst }}</h2>
+
+    {% for categoryy in categories %}
+        <li class="category-item">
+            <strong>
+                <a class="category-link" href="{% url 'products_by_category' categoryy.slug %}">
+                    {{ categoryy.name }}
+                </a>
+            </strong>
+        </li>
+
+        {% if category_selected.slug == categoryy.slug %}
+            <ul class="subcategory-list">
+                {% for sub in category_selected.subcategories.all %}
+                    <li class="subcategory-item">
+                        <a class="subcategory-link" href="{% url 'products_by_category_subcategory' categoryy.slug sub.slug %}">
+                            {{ sub.name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endfor %}
+
+
+
+
+
+    <li class="genre-selector">
+        <h3>Выбрать Жанр</h3>
+        {% for brand in brands %}
+            {% if sub_category_selected.slug %}
+                <a class="genre-link" href="{% url 'device_brand_filter_with_subcategory' sub_category_selected.slug brand.slug %}">{{ brand.name }}</a>
+
+            {% elif not sub_category_selected.slug %}
+                <a class="genre-link" href="{% url 'device_brand_filter' brand.slug %}">{{ brand.name }}</a>
+
+            {% endif %}
+        {% endfor %}
+    </li>
+
+    {% if products %}
+        <div class="product-grid">
+            {% for product in products %}
+                <a href="{% url 'product_detail' product.slug %}">
+
+                    <div class="product-card">
+                        <a href="{% url 'product_detail' product.slug %}">
+                            {% if product.image %}
+                                <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                            {% endif %}
+                            <h3>{{ product.name }}</h3>
+                            <p>{{ product.price }} ₽</p>
+                        </a>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>Нет товаров этого бренда.</p>
+    {% endif %}
+{% endblock %}

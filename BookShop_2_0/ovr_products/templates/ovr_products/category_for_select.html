@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %} Главная {% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Категория: {{ category.name }}</h1>
+
+    <ul class="category-list">
+        {% for category in categories %}
+            <li class="category-item">
+                <strong>
+                    <a class="category-link" href="{% url 'products_by_category' category.slug %}">
+                        {{ category.name }}
+                    </a>
+                </strong><br>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

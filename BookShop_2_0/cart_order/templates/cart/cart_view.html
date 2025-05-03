@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+
+{% block title %}{% endblock %}
+
+
+{% block content %}
+
+    <div class="product-list">
+        {% if cart %}
+             {% for product in cart %}
+                  <div class="product-card">
+                      <a href="{% url 'product_detail' product.product.slug %}">
+                          <h3 class="product-title">{{ product.product.name }}</h3>
+
+                          {% if product.product.image %}
+                              <img class="product-image" src="{{ product.product.image.url }}" alt="{{ product.product.name }}">
+                          {% endif %}
+
+                          <p class="product-price"><strong>Цена:</strong> {{ product.product.price }} $</p>
+
+                          <p class="product-category"><strong>Категория:</strong> {{ product.product.category.name }}</p>
+
+                          {% if product.product.subcategory %}
+                              <p class="product-subcategory"><strong>Тип:</strong> {{ product.product.subcategory.name }}</p>
+                          {% endif %}
+
+                          {% if product.product.device_brand %}
+                              <p class="product-brand">
+                                  <strong>Бренд:</strong> {{ product.product.device_brand.name }}
+                              </p>
+                          {% endif %}
+
+                          {% if product.product.genres.all %}
+                              <p class="product-genres">
+                                  <strong>Жанры:</strong>
+                                  {% for genre in product.product.genres.all %}
+                                      {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                                  {% endfor %}
+                              </p>
+                          {% endif %}
+
+                          <p class="product-description">
+                              {{ product.product.description|truncatechars:150 }}
+                          </p>
+
+                          <p class="product-quantity">
+                              <strong>Осталось на складе:</strong> {{ product.product.quantity }}
+                          </p>
+                      </a>
+                      <form method="post" action="" style="margin-top: 10px;">
+                          {% csrf_token %}
+                          <input type="hidden" name="delete_item_id" value="{{ product.id }}">
+                          <button type="submit">Удалить</button>
+                      </form>
+                      <div class="do-order-link"><a href="{% url 'cart_order:add_order' product.product.slug %}">ЗАКАЗАТЬ</a></div>
+                  </div>
+              {% endfor %}
+        {% else %}
+            <h2>Корзина Пуста!</h2>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+
+

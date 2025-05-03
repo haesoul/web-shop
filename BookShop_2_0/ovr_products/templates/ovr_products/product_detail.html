@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ product.name }} - Детали {% endblock %}
+
+{% block content %}
+    <div class="product-detail">
+        <h1>{{ product.name }}</h1>
+
+        {% if product.image %}
+            <div class="product-image">
+                <img src="{{ product.image.url }}" alt="{{ product.name }}" width="300">
+            </div>
+        {% endif %}
+
+        <div class="product-info">
+            <p><strong>Цена:</strong> {{ product.price }} $</p>
+            <p><strong>Осталось на складе:</strong> {{ product.quantity }}</p>
+
+            {% if product.device_brand %}
+                <p><strong>Бренд:</strong> {{ product.device_brand.name }}</p>
+            {% endif %}
+
+            {% if product.category %}
+                <p><strong>Категория:</strong>
+                    <a href="{% url 'products_by_category' product.category.slug %}">{{ product.category.name }}</a>
+                </p>
+            {% endif %}
+
+            {% if product.subcategory %}
+                <p><strong>Подкатегория:</strong>
+                    <a href="{% url 'products_by_category_subcategory' product.category.slug product.subcategory.slug %}">
+                        {{ product.subcategory.name }}
+                    </a>
+                </p>
+            {% endif %}
+
+            {% if product.genres.all %}
+                <p><strong>Жанры:</strong>
+                    {% for genre in product.genres.all %}
+                        <a href="{% url 'products_by_book_genre' product.category.slug product.subcategory.slug genre.slug %}">
+                            {{ genre.name }}
+                        </a>{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="product-description">
+            <h3>Описание</h3>
+            <p>{{ product.description }}</p>
+        </div>
+        <div class="product-detail-form-block">
+            <form action="" method="post">
+              {% csrf_token %}
+              {{ form.as_p }}
+              <button type="submit">Добавить в корзину</button>
+            </form>
+        </div>
+
+        <a href="{% url 'products_by_category' product.category.slug %}" class="back-link">Вернуться к категориям</a>
+    </div>
+{% endblock %}
