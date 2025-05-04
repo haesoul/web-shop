@@ -13,6 +13,9 @@ urlpatterns = [
     path('devices/brand/<slug:brand_slug>/', DeviceBrandFilterView.as_view(), name='device_brand_filter'),
     path('devices/brand/<slug:subcategory_slug>/<slug:brand_slug>/', DeviceBrandFilterView.as_view(), name='device_brand_filter_with_subcategory'),
     path('search/', search_results, name='search'),
+    path('favourites/',FavoriteListView.as_view(),name='favourites'),
+    path('favourites/add/<slug:slug>/', add_to_favorites, name='add_to_favorites'),
+    path('favourites/toggle/<slug:slug>/', ToggleFavoriteView.as_view(), name='toggle_favorite'),
 
 
 

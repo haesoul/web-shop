@@ -50,6 +50,12 @@
             <p>{{ product.description }}</p>
         </div>
         <div class="product-detail-form-block">
+            <form action="{% url 'main:add_to_favorites' product.slug %}" method="post" style="margin-top: 10px;">
+                {% csrf_token %}
+                <button type="submit">❤️ Добавить в избранное</button>
+            </form>
+        </div>
+        <div class="product-detail-form-block">
             <form action="" method="post">
               {% csrf_token %}
               {{ form.as_p }}

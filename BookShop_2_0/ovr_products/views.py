@@ -1,5 +1,8 @@
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views import View
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
 
@@ -186,3 +189,31 @@ def search_results(request):
         'query': query,
         'products': products
     })
+
+
+
+
+class ToggleFavoriteView(View):
+    def post(self, request, slug):
+        product = get_object_or_404(Product, slug=slug)
+        favorite, created = Favorite.objects.get_or_create(user=request.user, product=product)
+        if not created:
+            favorite.delete()  # Удаляем если уже был
+        return redirect('main:product_detail', slug=slug)
+
+
+class FavoriteListView(LoginRequiredMixin, ListView):
+    model = Favorite
+    template_name = 'ovr_products/favourites.html'
+    context_object_name = 'favorites'
+
+
+
+
+    def get_queryset(self):
+        return Favorite.objects.filter(user=self.request.user).select_related('product')
+@login_required
+def add_to_favorites(request, slug):
+    product = get_object_or_404(Product, slug=slug)
+    Favorite.objects.get_or_create(user=request.user, product=product)
+    return redirect('main:product_detail', slug=slug)

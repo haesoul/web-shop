@@ -1,6 +1,9 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
+from users.models import CustomUser
+
+
 class Category(models.Model):
     CATEGORY_TYPES = [
         ('book', 'Book'),
@@ -42,12 +45,12 @@ class DeviceBrand(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=50)
-    slug = models.SlugField(max_length=55, unique=True)
+    name = models.CharField(max_length=50,db_index=True)
+    slug = models.SlugField(max_length=55, unique=True,db_index=True)
     image = models.ImageField(upload_to='products/', blank=True, null=True)
     description = models.TextField(max_length=5000)
 
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE,db_index=True)
     subcategory = models.ForeignKey(SubCategory, on_delete=models.CASCADE, blank=True, null=True)
 
     genres = models.ManyToManyField(BookGenre, blank=True, related_name='products')
@@ -103,3 +106,12 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+class Favorite(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='favorites')
+    product = models.ForeignKey('ovr_products.Product', on_delete=models.CASCADE, related_name='favorited_by')
+    added_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'product')
+

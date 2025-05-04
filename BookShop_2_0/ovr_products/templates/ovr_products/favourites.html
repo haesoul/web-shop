@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Избранное{% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Избранные товары</h1>
+
+    <div class="product-list">
+        {% for favorite in favorites %}
+            {% with product=favorite.product %}
+                <div class="product-card">
+                    <a href="{% url 'main:product_detail' product.slug %}">
+                        <h3 class="product-title">{{ product.name }}</h3>
+
+                        {% if product.image %}
+                            <img class="product-image" src="{{ product.image.url }}" alt="{{ product.name }}">
+                        {% endif %}
+
+                        <p class="product-price"><strong>Цена:$</strong> {{ product.price }} $</p>
+
+                        <p class="product-category"><strong>Категория:</strong> {{ product.category.name }}</p>
+
+                        {% if product.subcategory %}
+                            <p class="product-subcategory"><strong>Тип:</strong> {{ product.subcategory.name }}</p>
+                        {% endif %}
+
+                        {% if product.device_brand %}
+                            <p class="product-brand">
+                                <strong>Бренд:</strong> {{ product.device_brand.name }}
+                            </p>
+                        {% endif %}
+
+                        {% if product.genres.all %}
+                            <p class="product-genres">
+                                <strong>Жанры:</strong>
+                                {% for genre in product.genres.all %}
+                                    {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+
+                        <p class="product-description">
+                            {{ product.description|truncatechars:150 }}
+                        </p>
+
+                        <p class="product-quantity">
+                            <strong>Осталось на складе:</strong> {{ product.quantity }}
+                        </p>
+                    </a>
+
+
+                    <form action="{% url 'main:toggle_favorite' product.slug %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit">Удалить из избранного</button>
+                    </form>
+                </div>
+            {% endwith %}
+        {% empty %}
+            <p>У вас нет избранных товаров.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
