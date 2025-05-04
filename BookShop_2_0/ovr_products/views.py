@@ -1,9 +1,11 @@
+from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import FormMixin
 
 from cart_order.forms import CartItemForm
 from cart_order.models import *
+from ovr_products.forms import SearchForm
 from ovr_products.models import *
 
 
@@ -173,3 +175,14 @@ class DeviceBrandFilterView(ListView):
 
         return context
 
+def search_results(request):
+    query = request.GET.get('q', '')
+    if query:
+        products = Product.objects.filter(name__icontains=query)
+    else:
+        products = Product.objects.none()  # Если нет запроса, то не показываем ничего
+
+    return render(request, 'ovr_products/search_results.html', {
+        'query': query,
+        'products': products
+    })

@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Результаты поиска{% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Результаты поиска</h1>
+
+    <p>Вы искали: "<strong>{{ query }}</strong>"</p>
+
+    {% if products %}
+        <p>Найдено товаров: {{ products.count }}</p>
+
+        <div class="product-list">
+            {% for product in products %}
+                <div class="product-card">
+                    <a href="{% url 'main:product_detail' product.slug %}">
+                        <h3 class="product-title">{{ product.name }}</h3>
+
+                        {% if product.photo %}
+                            <img class="product-image" src="{{ product.photo.url }}" alt="{{ product.name }}">
+                        {% endif %}
+
+                        <p class="product-price"><strong>Цена:</strong> {{ product.price }} $</p>
+
+                        <p class="product-category"><strong>Категория:</strong> {{ product.category.name }}</p>
+
+                        {% if product.subcategory %}
+                            <p class="product-subcategory"><strong>Тип:</strong> {{ product.subcategory.name }}</p>
+                        {% endif %}
+
+                        {% if product.device_brand %}
+                            <p class="product-brand">
+                                <strong>Бренд:</strong> {{ product.device_brand.name }}
+                            </p>
+                        {% endif %}
+
+                        {% if product.genres.all %}
+                            <p class="product-genres">
+                                <strong>Жанры:</strong>
+                                {% for genre in product.genres.all %}
+                                    {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}
+                            </p>
+                        {% endif %}
+
+                        <p class="product-description">
+                            {{ product.description|truncatechars:150 }}
+                        </p>
+
+                        <p class="product-quantity">
+                            <strong>Осталось на складе:</strong> {{ product.quantity }}
+                        </p>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+
+        {% if is_paginated %}
+            <div class="pagination">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1">&laquo; первая</a>
+                    <a href="?page={{ page_obj.previous_page_number }}">‹ предыдущая</a>
+                {% endif %}
+
+                <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}">следующая ›</a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% else %}
+        <p>Извините, товары по вашему запросу не найдены.</p>
+    {% endif %}
+{% endblock %}

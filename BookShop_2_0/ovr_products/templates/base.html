@@ -28,6 +28,11 @@
 
     </ul>
 </nav>
+    <form method="get" action="{% url 'main:search' %}">
+        <input type="text" name="q" placeholder="Поиск товаров..." value="{{ request.GET.q }}">
+        <button type="submit">Искать</button>
+    </form>
+
    <main class="main-content">
       {% block content %}
       {% endblock %}
