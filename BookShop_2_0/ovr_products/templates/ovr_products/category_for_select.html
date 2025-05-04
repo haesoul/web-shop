@@ -8,7 +8,7 @@
         {% for category in categories %}
             <li class="category-item">
                 <strong>
-                    <a class="category-link" href="{% url 'products_by_category' category.slug %}">
+                    <a class="category-link" href="{% url 'main:products_by_category' category.slug %}">
                         {{ category.name }}
                     </a>
                 </strong><br>

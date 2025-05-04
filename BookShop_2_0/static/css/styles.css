@@ -344,3 +344,176 @@ nav button:hover {
         margin-top: 0.5rem;
     }
 }
+
+
+
+.pagination {
+    margin-top: 2rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    font-size: 1rem;
+}
+
+.pagination a {
+    background-color: #edf2f7;
+    color: #2b6cb0;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.pagination a:hover {
+    background-color: #cbd5e1;
+}
+
+
+
+
+
+
+
+
+
+
+/* === Стиль для страницы заказов === */
+.order-card {
+    background-color: #fff;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.order-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.order-card p {
+    font-size: 1rem;
+    color: #333;
+    margin: 0.5rem 0;
+}
+
+.order-card .product-block-home {
+    display: flex;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #f1f1f1;
+    margin-bottom: 1rem;
+}
+
+.order-card .product-block-home:last-child {
+    border-bottom: none;
+}
+
+.product-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+}
+
+.product-name-in-list {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-left: 1rem;
+    flex: 1;
+}
+
+.products-middle-size-photo-in-list {
+    width: 100px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-price-in-list, .product-quantity-in-list {
+    font-size: 1rem;
+    color: #333;
+    margin-left: 1rem;
+}
+
+.product-price-value {
+    font-weight: bold;
+    color: #1e40af;
+}
+
+.product-quantity-in-list span {
+    font-weight: normal;
+    color: #555;
+}
+
+.product-quantity-in-list {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+h2 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 2rem;
+}
+
+.order-card a {
+    text-decoration: none;
+}
+
+.order-card .empty {
+    font-style: italic;
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.product-block-home p {
+    margin: 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+/* Стиль для карточек заказа */
+.order-card .order-status {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ff6600;
+}
+
+.order-card .order-details-link {
+    display: inline-block;
+    margin-top: 1rem;
+    background-color: #1e40af;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: background-color 0.2s ease;
+}
+
+.order-card .order-details-link:hover {
+    background-color: #334e9e;
+}
+
+.order-card .order-details-link:active {
+    transform: scale(0.98);
+}
+
+/* === Стиль для блока "Нет товаров в этом заказе" === */
+.order-card .empty {
+    font-style: italic;
+    color: #888;
+    text-align: center;
+}
+
+/* === Стиль для текста в случае отсутствия заказов === */
+h2.empty-orders {
+    font-style: italic;
+    color: #888;
+    font-size: 1rem;
+    text-align: center;
+}

@@ -16,7 +16,7 @@
         {% for categoryy in categories %}
             <li class="category-item">
                 <strong>
-                    <a class="category-link" href="{% url 'products_by_category' categoryy.slug %}">
+                    <a class="category-link" href="{% url 'main:products_by_category' categoryy.slug %}">
                         {{ categoryy.name }}
                     </a>
                 </strong>
@@ -26,7 +26,7 @@
                 <ul class="subcategory-list">
                     {% for sub in category.subcategories.all %}
                         <li class="subcategory-item">
-                            <a class="subcategory-link" href="{% url 'products_by_category_subcategory' categoryy.slug sub.slug %}">
+                            <a class="subcategory-link" href="{% url 'main:products_by_category_subcategory' categoryy.slug sub.slug %}">
                                 {{ sub.name }}
                             </a>
                         </li>
@@ -39,11 +39,11 @@
             <h3>Выбрать Жанр</h3>
             {% for book_genre in genres %}
                 {% if sub_category_selected %}
-                    <a class="genre-link" href="{% url 'products_by_book_genre' category.slug sub_category_selected book_genre.slug %}">
+                    <a class="genre-link" href="{% url 'main:products_by_book_genre' category.slug sub_category_selected book_genre.slug %}">
                         {{ book_genre.name }}
                     </a>
                 {% else %}
-                    <a class="genre-link" href="{% url 'only_genre_ordering' book_genre.slug %}">
+                    <a class="genre-link" href="{% url 'main:only_genre_ordering' book_genre.slug %}">
                         {{ book_genre.name }}
                     </a>
                 {% endif %}
@@ -53,10 +53,10 @@
 
     <ul class="product-list">
         {% for product in products %}
-            <a href="{% url 'product_detail' product.slug %}">
+            <a href="{% url 'main:product_detail' product.slug %}">
                 <li class="product-item">
                     <strong>{{ product.name }}</strong><br>
-                    Цена: {{ product.price }}<br>
+                    Цена:$ {{ product.price }}<br>
                     Кол-во: {{ product.quantity }}<br>
 
                     {% if product.image %}
@@ -68,4 +68,20 @@
             <li class="no-products">Нет продуктов в этой категории.</li>
         {% endfor %}
     </ul>
+    {% if is_paginated %}
+      <div class="pagination">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; первая</a>
+          <a href="?page={{ page_obj.previous_page_number }}">‹ предыдущая</a>
+        {% endif %}
+
+        <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">следующая ›</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+      </div>
+    {% endif %}
+
 {% endblock %}

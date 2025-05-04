@@ -10,8 +10,8 @@
 <body class="page-body">
 <nav>
     <ul class="nav-links">
-        <li><a href="{% url 'home' %}" class="nav-link">Главная</a></li>
-        <li><a href="{% url 'select_category' %}" class="nav-link">Категории</a></li>
+        <li><a href="{% url 'main:home' %}" class="nav-link">Главная</a></li>
+        <li><a href="{% url 'main:select_category' %}" class="nav-link">Категории</a></li>
         <li><a href="{% url 'cart_order:cart_items_view' %}" class="nav-link">Корзина</a></li>
         <li><a href="{% url 'cart_order:order_list' %}" class="nav-link">Заказы</a></li>
         <li><a href="#" class="nav-link nav-disabled">Пункт 5</a></li>

@@ -129,7 +129,7 @@ class OrderDetailView(LoginRequiredMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['items'] = self.object.items.all()  # <-- вот эта строка
+        context['items'] = self.object.items.all()
         return context
 
 

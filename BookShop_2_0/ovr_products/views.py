@@ -11,6 +11,9 @@ class HomeView(ListView):
     model = Product
     template_name = 'ovr_products/home.html'
     context_object_name = 'products'
+    paginate_by = 10
+
+
 
 class ProductDetailView(FormMixin,DetailView):
     template_name = 'ovr_products/product_detail.html'
@@ -52,7 +55,7 @@ class ProductByCategoryView(ListView):
     model = Product
     template_name = 'ovr_products/category_ordering.html'
     context_object_name = 'products'
-
+    paginate_by = 10
     def dispatch(self, request, *args, **kwargs):
         self.category = self.get_category()
         self.subcategory = self.get_subcategory()
@@ -83,6 +86,14 @@ class ProductByCategoryView(ListView):
         if self.genre:
             queryset = queryset.filter(genres=self.genre)
 
+        min_price = self.request.GET.get('min_price')
+        max_price = self.request.GET.get('max_price')
+
+        if min_price:
+            queryset = queryset.filter(price__gte=min_price)
+        if max_price:
+            queryset = queryset.filter(price__lte=max_price)
+
         return queryset.distinct()
 
 
@@ -110,7 +121,7 @@ class ProductByBookGenreView(ListView):
     model = Product
     template_name = 'ovr_products/only_book_genre_ordering.html'
     context_object_name = 'products'
-
+    paginate_by = 10
     def dispatch(self, request, *args, **kwargs):
         self.genre = get_object_or_404(BookGenre, slug=self.kwargs['genre_slug'])
         return super().dispatch(request, *args, **kwargs)
@@ -138,7 +149,7 @@ class DeviceBrandFilterView(ListView):
     model = Product
     template_name = 'ovr_products/device_brand_filter.html'
     context_object_name = 'products'
-
+    paginate_by = 10
     def get_category(self):
         return get_object_or_404(Category, slug=self.kwargs['category_slug'])
     def get_subcategory(self):

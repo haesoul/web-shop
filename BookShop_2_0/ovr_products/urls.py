@@ -1,7 +1,7 @@
 from django.urls import path
 
 from ovr_products.views import *
-
+app_name = 'main'
 urlpatterns = [
     path('',HomeView.as_view(),name='home'),
     path('product-detail/<slug:slug>/',ProductDetailView.as_view(),name='product_detail'),

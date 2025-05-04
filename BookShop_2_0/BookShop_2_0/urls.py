@@ -23,7 +23,7 @@ from BookShop_2_0 import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('ovr_products.urls')),
+    path('', include('ovr_products.urls',namespace='main')),
     path('',include('cart_order.urls',namespace='cart_order')),
     path('user/',include('users.urls',namespace='users'))
 

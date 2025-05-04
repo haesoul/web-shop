@@ -22,13 +22,13 @@
 
             {% if product.category %}
                 <p><strong>Категория:</strong>
-                    <a href="{% url 'products_by_category' product.category.slug %}">{{ product.category.name }}</a>
+                    <a href="{% url 'main:products_by_category' product.category.slug %}">{{ product.category.name }}</a>
                 </p>
             {% endif %}
 
             {% if product.subcategory %}
                 <p><strong>Подкатегория:</strong>
-                    <a href="{% url 'products_by_category_subcategory' product.category.slug product.subcategory.slug %}">
+                    <a href="{% url 'main:products_by_category_subcategory' product.category.slug product.subcategory.slug %}">
                         {{ product.subcategory.name }}
                     </a>
                 </p>
@@ -37,7 +37,7 @@
             {% if product.genres.all %}
                 <p><strong>Жанры:</strong>
                     {% for genre in product.genres.all %}
-                        <a href="{% url 'products_by_book_genre' product.category.slug product.subcategory.slug genre.slug %}">
+                        <a href="{% url 'main:products_by_book_genre' product.category.slug product.subcategory.slug genre.slug %}">
                             {{ genre.name }}
                         </a>{% if not forloop.last %}, {% endif %}
                     {% endfor %}
@@ -57,6 +57,6 @@
             </form>
         </div>
 
-        <a href="{% url 'products_by_category' product.category.slug %}" class="back-link">Вернуться к категориям</a>
+        <a href="{% url 'main:products_by_category' product.category.slug %}" class="back-link">Вернуться к категориям</a>
     </div>
 {% endblock %}

@@ -9,7 +9,7 @@
     {% for categoryy in categories %}
         <li class="category-item">
             <strong>
-                <a class="category-link" href="{% url 'products_by_category' categoryy.slug %}">
+                <a class="category-link" href="{% url 'main:products_by_category' categoryy.slug %}">
                     {{ categoryy.name }}
                 </a>
             </strong>
@@ -19,7 +19,7 @@
             <ul class="subcategory-list">
                 {% for sub in category_selected.subcategories.all %}
                     <li class="subcategory-item">
-                        <a class="subcategory-link" href="{% url 'products_by_category_subcategory' categoryy.slug sub.slug %}">
+                        <a class="subcategory-link" href="{% url 'main:products_by_category_subcategory' categoryy.slug sub.slug %}">
                             {{ sub.name }}
                         </a>
                     </li>
@@ -36,10 +36,10 @@
         <h3>Выбрать Жанр</h3>
         {% for brand in brands %}
             {% if sub_category_selected.slug %}
-                <a class="genre-link" href="{% url 'device_brand_filter_with_subcategory' sub_category_selected.slug brand.slug %}">{{ brand.name }}</a>
+                <a class="genre-link" href="{% url 'main:device_brand_filter_with_subcategory' sub_category_selected.slug brand.slug %}">{{ brand.name }}</a>
 
             {% elif not sub_category_selected.slug %}
-                <a class="genre-link" href="{% url 'device_brand_filter' brand.slug %}">{{ brand.name }}</a>
+                <a class="genre-link" href="{% url 'main:device_brand_filter' brand.slug %}">{{ brand.name }}</a>
 
             {% endif %}
         {% endfor %}
@@ -48,15 +48,15 @@
     {% if products %}
         <div class="product-grid">
             {% for product in products %}
-                <a href="{% url 'product_detail' product.slug %}">
+                <a href="{% url 'main:product_detail' product.slug %}">
 
                     <div class="product-card">
-                        <a href="{% url 'product_detail' product.slug %}">
+                        <a href="{% url 'main:product_detail' product.slug %}">
                             {% if product.image %}
                                 <img src="{{ product.image.url }}" alt="{{ product.name }}">
                             {% endif %}
                             <h3>{{ product.name }}</h3>
-                            <p>{{ product.price }} ₽</p>
+                            <p>${{ product.price }} ₽</p>
                         </a>
                     </div>
                 </a>
@@ -65,4 +65,20 @@
     {% else %}
         <p>Нет товаров этого бренда.</p>
     {% endif %}
+    {% if is_paginated %}
+      <div class="pagination">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; первая</a>
+          <a href="?page={{ page_obj.previous_page_number }}">‹ предыдущая</a>
+        {% endif %}
+
+        <span>Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">следующая ›</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+      </div>
+    {% endif %}
+
 {% endblock %}
